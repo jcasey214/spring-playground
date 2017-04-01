@@ -34,7 +34,7 @@ public class MathServiceTest {
         String result = mathService.calculate("divide", 9, 3);
         assertEquals("9 / 3 = 3", result);
     }
-    
+
     @Test
     public void testSumValues() throws Exception {
         String result = mathService.sumValues(new Integer[]{1,2,3,4,5});

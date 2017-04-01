@@ -25,4 +25,9 @@ public class MathController {
     public String getSumOfValues(@RequestParam("n") Integer[] values) {
         return mathService.sumValues(values);
     }
+
+    @RequestMapping(value = "/volume/{length}/{width}/{height}")
+    public String getVolume(@PathVariable("length") Integer length, @PathVariable("width") Integer width, @PathVariable("height") Integer height) {
+        return String.format("The volume of a %sx%sx%s rectangle is %s", length, width, height, length * width * height);
+    }
 }
