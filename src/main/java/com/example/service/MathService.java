@@ -1,8 +1,10 @@
 package com.example.service;
 
+import com.example.model.AreaRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,5 +33,28 @@ public class MathService {
         String result = StringUtils.join(valueStrings, " + ");
 
         return String.format("%s = %s", result, sum);
+    }
+
+    public String calculateArea(AreaRequest request) {
+        DecimalFormat numberFormat = new DecimalFormat("#.00000");
+        switch(request.getType()) {
+            case "circle":
+                if(request.getRadius() == null){
+                    return "Invalid";
+                }
+                return String.format("Area of a circle with a radius of %s is %s",
+                        request.getRadius(),
+                        numberFormat.format(Math.PI * Math.pow(request.getRadius(), 2)));
+            case "rectangle":
+                if(request.getWidth() == null || request.getHeight() == null) {
+                    return "Invalid";
+                }
+                return String.format("Area of a %sx%s rectangle is %s",
+                        request.getWidth(),
+                        request.getHeight(),
+                        request.getWidth() * request.getHeight());
+            default:
+                return "Invalid";
+        }
     }
 }

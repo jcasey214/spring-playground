@@ -1,7 +1,9 @@
 package com.example;
 
+import com.example.model.AreaRequest;
 import com.example.service.MathService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -29,5 +31,10 @@ public class MathController {
     @RequestMapping(value = "/volume/{length}/{width}/{height}")
     public String getVolume(@PathVariable("length") Integer length, @PathVariable("width") Integer width, @PathVariable("height") Integer height) {
         return String.format("The volume of a %sx%sx%s rectangle is %s", length, width, height, length * width * height);
+    }
+
+    @PostMapping(value = "/area",  consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String getArea(AreaRequest request) {
+        return mathService.calculateArea(request);
     }
 }
