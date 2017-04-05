@@ -1,4 +1,4 @@
-package com.example;
+package com.example.controller;
 
 import com.example.model.AreaRequest;
 import com.example.service.MathService;

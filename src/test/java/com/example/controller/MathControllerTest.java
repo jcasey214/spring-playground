@@ -1,5 +1,6 @@
-package com.example;
+package com.example.controller;
 
+import com.example.controller.MathController;
 import com.example.service.MathService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
