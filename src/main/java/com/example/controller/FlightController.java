@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.TimeZone;
+import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -20,5 +18,11 @@ public class FlightController {
     public Flight getFlight() {
         return new Flight(new GregorianCalendar(2017, 3, 21, 8, 34).getTime(),
                 asList(new Flight.Ticket(new Flight.Ticket.Passenger("Some name", "Some other name"), 200)));
+    }
+
+    @GetMapping("/")
+    public List<Flight> getFlights() {
+        return asList(new Flight(new GregorianCalendar(2017, 3, 21, 8, 34).getTime(),
+                asList(new Flight.Ticket(new Flight.Ticket.Passenger("Some other name", null), 400))));
     }
 }
