@@ -11,18 +11,19 @@ import java.util.List;
 import static java.util.Arrays.asList;
 
 @RestController
-@RequestMapping("/flights")
 public class FlightController {
 
-    @GetMapping("/flight")
+    @GetMapping("/flights/flight")
     public Flight getFlight() {
         return new Flight(new GregorianCalendar(2017, 3, 21, 8, 34).getTime(),
                 asList(new Flight.Ticket(new Flight.Ticket.Passenger("Some name", "Some other name"), 200)));
     }
 
-    @GetMapping("/")
+    @GetMapping("/flights")
     public List<Flight> getFlights() {
         return asList(new Flight(new GregorianCalendar(2017, 3, 21, 8, 34).getTime(),
+                asList(new Flight.Ticket(new Flight.Ticket.Passenger("Some name", "Some other name"), 200))),
+                new Flight(new GregorianCalendar(2017, 3, 21, 8, 34).getTime(),
                 asList(new Flight.Ticket(new Flight.Ticket.Passenger("Some other name", null), 400))));
     }
 }
