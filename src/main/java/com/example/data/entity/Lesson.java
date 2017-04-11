@@ -1,5 +1,8 @@
 package com.example.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +13,9 @@ public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonProperty
     private Long id;
+    @JsonProperty
     private String title;
 
     public Long getId() {
@@ -26,6 +31,11 @@ public class Lesson {
     }
 
     public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @JsonCreator
+    public Lesson(@JsonProperty("title") String title) {
         this.title = title;
     }
 }
