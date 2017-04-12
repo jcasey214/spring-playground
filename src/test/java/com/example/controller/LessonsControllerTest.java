@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.data.entity.Lesson;
 import com.example.data.repo.LessonRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,9 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -83,5 +84,43 @@ public class LessonsControllerTest {
 
         List<Lesson> all = lessonRepository.findAll();
         assertThat(all.size(), equalTo(0));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testGetAllLessonsEndpoint() throws Exception {
+        Lesson lesson1 = lessonRepository.save(new Lesson("lesson 1"));
+        Lesson lesson2 = lessonRepository.save(new Lesson("lesson 2"));
+
+        mockMvc.perform(get("/lessons"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].title", is("lesson 1")))
+                .andExpect(jsonPath("$.[1].title", is("lesson 2")))
+                .andExpect(jsonPath("$.[2]").doesNotExist());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void testPostLessonsEndpoint() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        Lesson mockLesson = new Lesson("New Lesson");
+        String json = mapper.writeValueAsString(mockLesson);
+
+
+        MockHttpServletRequestBuilder request = post("/lessons")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mockMvc.perform(request)
+                .andExpect(status().isOk());
+
+        List<Lesson> all = lessonRepository.findAll();
+
+        assertThat(all.size(), equalTo(1));
+
+        Lesson newLesson = all.get(0);
+        assertThat(newLesson.getTitle(), equalTo("New Lesson"));
     }
 }
