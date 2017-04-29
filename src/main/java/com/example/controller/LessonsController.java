@@ -5,6 +5,9 @@ import com.example.data.repo.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/lessons")
 public class LessonsController {
