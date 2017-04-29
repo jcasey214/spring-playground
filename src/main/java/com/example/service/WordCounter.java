@@ -12,8 +12,6 @@ public class WordCounter {
         String s = str.replaceAll("[^a-zA-Z\\s]", "").toLowerCase();
 
         String[] words = StringUtils.split(s, " ");
-        System.out.printf("++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        System.out.printf(words.toString());
         Map<String, Integer> count = new HashMap<>();
 
         for(String w : words){
