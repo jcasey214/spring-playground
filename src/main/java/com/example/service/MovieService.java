@@ -13,10 +13,7 @@ public class MovieService {
 
     public List<Movie> fetchMovies(String q) {
         String url = String.format("http://www.omdbapi.com/?s=%s", q);
-        System.out.println("calling omdb with url " + url);
         OmdbResponse queryResponse = this.restTemplate.getForObject(url, OmdbResponse.class);
-
-        System.out.println(queryResponse    );
 
         return queryResponse.getSearch();
 
