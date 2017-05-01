@@ -18,4 +18,8 @@ public class MovieService {
         return queryResponse.getSearch();
 
     }
+
+    public RestTemplate getRestTemplate() {
+        return restTemplate;
+    }
 }
